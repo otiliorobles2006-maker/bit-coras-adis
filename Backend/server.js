@@ -1,22 +1,42 @@
 const express = require('express');
 const cors = require('cors');
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
+const { Pool } = require('pg');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const dbPath = path.join(__dirname, 'database.sqlite');
 
 app.use(cors());
 app.use(express.json());
 
-const db = new sqlite3.Database(dbPath, (error) => {
-  if (error) {
-    console.error('Error al conectar con SQLite:', error.message);
-  } else {
-    console.log('Conexión correcta con la base de datos SQLite.');
-  }
+// Conexión a PostgreSQL usando la variable de entorno que da Render
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
 });
+
+// Crea la tabla e inserta datos si no existen al arrancar
+async function inicializarDB() {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS reporte_ADIS (
+      ID SERIAL PRIMARY KEY,
+      Mes TEXT NOT NULL,
+      Actividad TEXT NOT NULL,
+      Horas INTEGER NOT NULL,
+      EvidenciaURL TEXT NOT NULL
+    )
+  `);
+
+  const { rows } = await pool.query('SELECT COUNT(*) FROM reporte_ADIS');
+  if (parseInt(rows[0].count) === 0) {
+    await pool.query(`
+      INSERT INTO reporte_ADIS (Mes, Actividad, Horas, EvidenciaURL) VALUES
+      ('Febrero', 'Inicio de la Constitución del nuevo seguro', 50, 'https://drive.google.com/drive/folders/1qWZLtQZkkmIhyu0YbH-wBqRqeArqr0X-'),
+      ('Mayo', 'Jornada de Ingenieria', 50, 'https://drive.google.com/drive/folders/1mbuB8TsxWe82B_SbBbGUuNvAAICkcebC'),
+      ('Mayo', 'Kendo', 38, 'https://drive.google.com/drive/folders/1NxXYIZWGp-2hZmVXAdrQXKlWTM9O2rH0')
+    `);
+    console.log('Datos iniciales insertados.');
+  }
+}
 
 app.get('/', (req, res) => {
   res.json({
@@ -25,25 +45,16 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('/api/adis', (req, res) => {
-  const sql = `
-    SELECT ID, Mes, Actividad, Horas, EvidenciaURL
-    FROM reporte_ADIS
-    ORDER BY ID ASC
-  `;
-
-  db.all(sql, [], (error, rows) => {
-    if (error) {
-      return res.status(500).json({
-        error: 'Error al consultar las actividades',
-        detalle: error.message
-      });
-    }
-
+app.get('/api/adis', async (req, res) => {
+  try {
+    const { rows } = await pool.query('SELECT * FROM reporte_ADIS ORDER BY ID ASC');
     res.json(rows);
-  });
+  } catch (error) {
+    res.status(500).json({ error: 'Error al consultar las actividades', detalle: error.message });
+  }
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+  await inicializarDB();
   console.log(`Servidor iniciado en http://localhost:${PORT}`);
 });

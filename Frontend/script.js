@@ -1,4 +1,6 @@
-const API_URL = 'http://localhost:3000/api/adis';
+// ⚠️ CAMBIA ESTA URL por la que te dé Render después de hacer el deploy del Backend
+const API_URL = 'https://TU-BACKEND.onrender.com/api/adis';
+
 const tablaActividades = document.getElementById('tablaActividades');
 
 async function cargarActividades() {
