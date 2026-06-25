@@ -28,10 +28,10 @@ async function cargarActividades() {
       const fila = document.createElement('tr');
 
       fila.innerHTML = `
-        <td>${actividad.ID}</td>
-        <td>${actividad.Mes}</td>
-        <td>${actividad.Actividad}</td>
-        <td>${actividad.Horas}</td>
+        <td>${actividad.id}</td>
+        <td>${actividad.mes}</td>
+        <td>${actividad.actividad}</td>
+        <td>${actividad.horas}</td>
         <td>
           <a class="boton-evidencia" href="${actividad.EvidenciaURL}" target="_blank">
             Ver Evidencia
