@@ -33,7 +33,7 @@ async function cargarActividades() {
         <td>${actividad.actividad}</td>
         <td>${actividad.horas}</td>
         <td>
-          <a class="boton-evidencia" href="${actividad.EvidenciaURL}" target="_blank">
+          <a class="boton-evidencia" href="${actividad.evidenciaURL}" target="_blank">
             Ver Evidencia
           </a>
         </td>
