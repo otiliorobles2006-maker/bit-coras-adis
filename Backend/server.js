@@ -8,13 +8,11 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Conexión a PostgreSQL usando la variable de entorno que da Render
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false }
 });
 
-// Crea la tabla e inserta datos si no existen al arrancar
 async function inicializarDB() {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS reporte_ADIS (
@@ -26,28 +24,24 @@ async function inicializarDB() {
     )
   `);
 
-  const { rows } = await pool.query('SELECT COUNT(*) FROM reporte_ADIS');
+  const { rows } = await pool.query('SELECT COUNT(*) FROM reporte_adis');
   if (parseInt(rows[0].count) === 0) {
     await pool.query(`
-      INSERT INTO reporte_ADIS (Mes, Actividad, Horas, EvidenciaURL) VALUES
+      INSERT INTO reporte_adis (Mes, Actividad, Horas, EvidenciaURL) VALUES
       ('Febrero', 'Inicio de la Constitución del nuevo seguro', 50, 'https://drive.google.com/drive/folders/1qWZLtQZkkmIhyu0YbH-wBqRqeArqr0X-'),
       ('Mayo', 'Jornada de Ingenieria', 50, 'https://drive.google.com/drive/folders/1mbuB8TsxWe82B_SbBbGUuNvAAICkcebC'),
       ('Mayo', 'Kendo', 38, 'https://drive.google.com/drive/folders/1NxXYIZWGp-2hZmVXAdrQXKlWTM9O2rH0')
     `);
-    console.log('Datos iniciales insertados.');
   }
 }
 
 app.get('/', (req, res) => {
-  res.json({
-    mensaje: 'API Bitácora Digital de ADIS funcionando',
-    endpoint: '/api/adis'
-  });
+  res.json({ mensaje: 'API Bitácora Digital de ADIS funcionando', endpoint: '/api/adis' });
 });
 
 app.get('/api/adis', async (req, res) => {
   try {
-    const { rows } = await pool.query('SELECT * FROM reporte_ADIS ORDER BY ID ASC');
+    const { rows } = await pool.query('SELECT * FROM reporte_adis ORDER BY ID ASC');
     res.json(rows);
   } catch (error) {
     res.status(500).json({ error: 'Error al consultar las actividades', detalle: error.message });
