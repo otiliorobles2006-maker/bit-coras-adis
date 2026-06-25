@@ -1,0 +1,108 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #eef3f9;
+  color: #1f2937;
+}
+
+.contenedor {
+  width: min(1100px, 92%);
+  margin: 40px auto;
+}
+
+.encabezado {
+  background: linear-gradient(135deg, #20365c, #f3481d);
+  color: white;
+  padding: 32px;
+  border-radius: 22px;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+}
+
+.encabezado h1 {
+  font-size: 34px;
+  margin-bottom: 8px;
+}
+
+.datos-alumno {
+  background: rgba(255, 255, 255, 0.16);
+  padding: 18px;
+  border-radius: 16px;
+  min-width: 280px;
+}
+
+.datos-alumno p {
+  margin-bottom: 8px;
+}
+
+.tarjeta-resumen {
+  background: white;
+  margin: 24px 0;
+  padding: 24px;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.tarjeta-resumen h2 {
+  margin-bottom: 8px;
+}
+
+.tabla-contenedor {
+  background: white;
+  padding: 20px;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 14px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+th {
+  background: #f3f6fb;
+  color: #111827;
+}
+
+.boton-evidencia {
+  background: #8d3d3d;
+  color: white;
+  text-decoration: none;
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.boton-evidencia:hover {
+  background: #8aaa6f;
+}
+
+.mensaje-error {
+  color: #b91c1c;
+  font-weight: bold;
+}
+
+@media (max-width: 760px) {
+  .encabezado {
+    flex-direction: column;
+  }
+
+  .encabezado h1 {
+    font-size: 26px;
+  }
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bitácora Digital de ADIS</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="contenedor">
+    <section class="encabezado">
+      <div>
+        <h1>Bitácora Digital de ADIS</h1>
+        <p>Expediente digital del alumno</p>
+      </div>
+      <div class="datos-alumno">
+        <p><strong>Nombre:</strong> Otilio Robles Moya </p>
+        <p><strong>Matrícula:</strong> 24040904 </p>
+        <p><strong>Grupo:</strong> 03</p>
+      </div>
+    </section>
+
+    <section class="tarjeta-resumen">
+      <h2>Actividades registradas</h2>
+    </section>
+
+    <section class="tabla-contenedor">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Mes</th>
+            <th>Actividad</th>
+            <th>Horas</th>
+            <th>Evidencia</th>
+          </tr>
+        </thead>
+        <tbody id="tablaActividades">
+          <tr>
+            <td colspan="5">Cargando actividades...</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
