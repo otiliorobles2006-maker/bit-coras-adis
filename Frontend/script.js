@@ -1,4 +1,3 @@
-// ⚠️ CAMBIA ESTA URL por la que te dé Render después de hacer el deploy del Backend
 const API_URL = 'https://bit-coras-adis.onrender.com/api/adis';
 
 const tablaActividades = document.getElementById('tablaActividades');
@@ -33,7 +32,7 @@ async function cargarActividades() {
         <td>${actividad.actividad}</td>
         <td>${actividad.horas}</td>
         <td>
-          <a class="boton-evidencia" href="${actividad.evidenciaURL}" target="_blank">
+          <a class="boton-evidencia" href="${actividad.evidenciaurl}" target="_blank">
             Ver Evidencia
           </a>
         </td>
